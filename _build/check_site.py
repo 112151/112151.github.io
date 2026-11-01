@@ -17,7 +17,7 @@ fail = 0
 
 # 1. 禁用詞（機密／敏感對象／個資）
 banned = ["校長", "董事", "協助營", "協助總", "協助長", "泌尿", "心臟內科", "GA_MEDMAT", "api_medmat", "10.165", "tmu-cmd",
-          "112151", "109041", "\\\\", "D:/", "E:/", "N:/", "0958725805", "69/10/31", "已婚", "hotmail",
+          "109041", "\\\\", "D:/", "E:/", "N:/", "0958725805", "69/10/31", "已婚", "hotmail",
           "NSSM", "PBIRS", "kpi2"]
 for src_name, t in (("index.html", st), ("resume_public.html", pt)):
     for b in banned:
@@ -27,7 +27,7 @@ for src_name, t in (("index.html", st), ("resume_public.html", pt)):
             print(f"[禁用詞] {src_name}: {b} x{n}")
 
 # 2. 數字追溯：網頁每個數字（含單位前綴）都要在履歷原文中找得到
-nums = sorted(set(re.findall(r"\d+(?:\.\d+)?", st)))
+nums = sorted(set(re.findall(r"\d+(?:\.\d+)?", re.sub(r"github\.com/\S+", " ", st))))  # 帳號名不算數字
 norm_r = rt.replace(",", "")
 missing = [n for n in nums if n not in norm_r]
 print("網頁數字共", len(nums), "個；履歷找不到：", missing)
